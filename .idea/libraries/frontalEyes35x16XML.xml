@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="frontalEyes35x16XML">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/OpenCV-Python-Series-master/src/cascades/third-party/frontalEyes35x16XML.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
