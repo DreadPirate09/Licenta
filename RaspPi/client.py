@@ -27,7 +27,7 @@ def post_frame():
         "img":img_str
         }
 
-    r = requests.post("http://127.0.0.1:4040", json=json.dumps(files)) #POST to server as json
+    r = requests.post("http://127.0.0.1:5000", json=json.dumps(files)) #POST to server as json
 
     print(r.json())
 
@@ -42,6 +42,8 @@ while(True):
     ret, frame = cap.read()
     gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
+    cv2.imwrite('7'+'.png', frame)
+    post_frame()
     for (x, y, w, h) in faces:
 
         roi_gray = gray[y:y+h, x:x+w]
@@ -57,8 +59,6 @@ while(True):
     if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
-
-# When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
 
