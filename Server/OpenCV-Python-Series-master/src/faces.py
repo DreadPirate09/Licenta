@@ -32,16 +32,16 @@ def post_frame():
 
     print(r.json())
 
-face_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_frontalface_alt2.xml')
-eye_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_eye.xml')
-smile_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_smile.xml')
+face_cascade = cv2.CascadeClassifier('C:\\GitRepo1\\Licenta\\Licenta\\Server\\OpenCV-Python-Series-master\\src\\cascades\\data\\haarcascade_frontalface_alt2.xml')
+eye_cascade = cv2.CascadeClassifier('C:\\GitRepo1\\Licenta\\Licenta\\Server\\OpenCV-Python-Series-master\\src\\cascades\\data\\haarcascade_eye.xml')
+smile_cascade = cv2.CascadeClassifier('C:\\GitRepo1\\Licenta\\Licenta\\Server\\OpenCV-Python-Series-master\\src\\cascades\\data\\haarcascade_smile.xml')
 
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read("face-trainner.yml")
+recognizer.read("C:\\GitRepo1\\Licenta\\Licenta\\Server\\OpenCV-Python-Series-master\\src\\face-trainner.yml")
 
 labels = {"person_name": 1}
-with open("pickles/face-labels.pickle", 'rb') as f:
+with open("C:\\GitRepo1\\Licenta\\Licenta\\Server\\OpenCV-Python-Series-master\\src\\pickles\\face-labels.pickle", 'rb') as f:
     og_labels = pickle.load(f)
     labels = {v:k for k,v in og_labels.items()}
 

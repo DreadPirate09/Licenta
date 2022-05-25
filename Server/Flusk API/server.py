@@ -6,6 +6,10 @@ from io import BytesIO
 import numpy as np
 import os
 import cv2
+import sys
+sys.path.append('C:\\GitRepo1\\Licenta\\Licenta\\Server\\OpenCV-Python-Series-master\\src')
+import faces
+
 
 app = Flask(__name__)
 count = 0
@@ -31,6 +35,8 @@ def index():
     data_np = np.fromstring(img, dtype='uint8')
     decimg = cv2.imdecode(data_np, 1)
     cv2.imwrite("new.png", decimg)
+
+    # here 
 
     return jsonify(response)
 
