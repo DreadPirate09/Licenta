@@ -1,1 +1,0 @@
-print("We got the camera on")

@@ -32,7 +32,6 @@ def post_frame():
 
     print(r.json())
 
-
 face_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_frontalface_alt2.xml')
 eye_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_eye.xml')
 smile_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_smile.xml')
@@ -50,20 +49,21 @@ cap = cv2.VideoCapture(0)
 check = 1
 i_s = 2000
 
-while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
+ret, img = cap.read()
+
+
+def check_person(frame):
+
     gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
+    check = 0
     for (x, y, w, h) in faces:
-        #print(x,y,w,h)
-        roi_gray = gray[y:y+h, x:x+w] #(ycord_start, ycord_end)
+
+        roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
 
-        # recognize? deep learned model predict keras tensorflow pytorch scikit learn
         id_, conf = recognizer.predict(roi_gray)
-        if conf>=70 and conf <= 100:
-            i_s = i_s + 1
+        if conf>=50 and conf <= 100:
             print(labels[id_])
             print(conf)
             font = cv2.FONT_HERSHEY_SIMPLEX
@@ -74,7 +74,6 @@ while(True):
             stroke = 2
             cv2.putText(frame, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
             if labels[id_] == "lots_of_georgian_second":
-                post_frame()
                 time.sleep(1)
 
         color = (255, 0, 0) #BGR 0-255 
@@ -82,30 +81,23 @@ while(True):
         end_cord_x = x + w
         end_cord_y = y + h
         check = 1
-        if check == 1:
-            cv2.rectangle(frame, (x, y), (end_cord_x, end_cord_y), color, stroke)
-            check = 0
-        #subitems = smile_cascade.detectMultiScale(roi_gray)
-        #for (ex,ey,ew,eh) in subitems:
-        #   cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-    # Display the resulting frame
+
     cv2.imshow('frame',frame)
+    if check == 0 :
+        return False
+    else :
+        return True
+
+
+img2 = cv2.imread('7.png')
+
+while(True):
+    ret = check_person(img)
+    check = 0
+    if ret == False :
+        print('no face detected')
+        break
     if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
-@app.route("/hello", methods=["GET"])
-def hello():
-    #os.system("shutdown /s /t 1")
-    files = {
-    "text":"hogehoge",
-    "img": "asdasd"
-    }
-    return json.dumps(files)
 
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
-
-if __name__ == "__main__":
-    app.debug = True
-    app.run()
