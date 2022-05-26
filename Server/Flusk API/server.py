@@ -6,6 +6,10 @@ from io import BytesIO
 import numpy as np
 import os
 import cv2
+import sys
+sys.path.append('C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src')
+import faces
+
 
 app = Flask(__name__)
 count = 0
@@ -31,6 +35,20 @@ def index():
     data_np = np.fromstring(img, dtype='uint8')
     decimg = cv2.imdecode(data_np, 1)
     cv2.imwrite("new.png", decimg)
+    img = cv2.imread("new.png")
+    ret2 = faces.execute(img)
+
+    # if ret == True :
+    #     ret = "face detected"
+    # else:
+    #     ret = "no face"
+    # here 
+
+    response = {
+        "text":1,
+        "img_data":1,
+        "ret_val":ret2    
+        }
 
     return jsonify(response)
 

@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void doPostRequest() {
         Log.d("OKHTTP3","Post function called");
-        String url = "http://9c6f-82-79-160-85.ngrok.io";
+        String url = "https://344f-95-76-3-88.ngrok.io";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
