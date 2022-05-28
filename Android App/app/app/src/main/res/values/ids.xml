@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textView" type="id" />
+    <item name="textViewGallery" type="id" />
+    <item name="textViewCheck" type="id" />
+    <item name="iv_image" type="id" />
+    <item name="cameraBtn" type="id" />
+    <item name="send_Req_Btn" type="id" />
+    <item name="chooseBtn" type="id" />
+</resources>

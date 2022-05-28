@@ -10,7 +10,6 @@ import sys
 sys.path.append('C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src')
 import faces
 
-
 app = Flask(__name__)
 count = 0
 
@@ -23,13 +22,6 @@ def index():
     print(dict_data)
 
     img = dict_data["img"] 
-    
-    # text = dict_data["text"] + "fuga" #Properly process with the acquired text
-
-    response = {
-        "text":1,
-        "img_data":1        
-        }
 
     img = base64.b64decode(img)
     data_np = np.fromstring(img, dtype='uint8')
@@ -37,12 +29,6 @@ def index():
     cv2.imwrite("new.png", decimg)
     img = cv2.imread("new.png")
     ret2 = faces.execute(img)
-
-    # if ret == True :
-    #     ret = "face detected"
-    # else:
-    #     ret = "no face"
-    # here 
 
     response = {
         "text":1,
@@ -60,8 +46,6 @@ def android():
         "code":100     
         }
     return jsonify(response)
-
-
 
 if __name__ == "__main__":
     app.debug = True
