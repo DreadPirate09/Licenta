@@ -4,44 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#79C57D"
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/cameraBtn"
-        android:layout_width="107dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="36dp"
-        android:text="CAMERA"
+        android:id="@+id/Locker"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="241dp"
+        android:layout_height="55dp"
+        android:background="#CC0F0F"
+        android:drawableBottom="@drawable/ic_launcher_background"
+        android:text="Locker"
+        app:icon="@android:drawable/ic_lock_idle_lock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_Req_Btn"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="185dp" />
 
-    <Button
-        android:id="@+id/chooseBtn"
-        android:layout_width="107dp"
-        android:layout_height="46dp"
-        android:text="CHOOSE"
-        app:layout_constraintBottom_toTopOf="@+id/iv_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cameraBtn"
-        tools:ignore="MissingConstraints" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="274dp" />
-
-    <Button
-        android:id="@+id/send_Req_Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="send req"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

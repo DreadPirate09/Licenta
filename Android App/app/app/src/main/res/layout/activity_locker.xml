@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#AC9C60"
+    tools:context=".Locker">
+
+    <Button
+        android:id="@+id/cameraBtn"
+        android:layout_width="107dp"
+        android:layout_height="112dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp"
+        app:icon="@android:drawable/ic_menu_camera"
+        app:iconSize="80dp"
+        app:iconTint="?android:attr/colorMultiSelectHighlight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/chooseBtn"
+        android:layout_width="107dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="76dp"
+        app:icon="@android:drawable/ic_menu_gallery"
+        app:iconSize="80dp"
+        app:iconTint="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/send_Req_Btn"
+        app:layout_constraintStart_toEndOf="@+id/cameraBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_image"
+        android:layout_width="200dp"
+        android:layout_height="199dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/send_Req_Btn"
+        android:layout_width="107dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="16dp"
+        app:icon="?android:attr/fingerprintAuthDrawable"
+        app:iconSize="80dp"
+        app:iconTint="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="m" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAMERA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cameraBtn"
+        app:layout_constraintVertical_bias="0.051"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GALLERY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseBtn"
+        app:layout_constraintVertical_bias="0.051"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CHECK IDENTITY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_Req_Btn"
+        app:layout_constraintVertical_bias="0.051"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewIdentity"
+        android:layout_width="156dp"
+        android:layout_height="42dp"
+        android:text=""
+        android:textAllCaps="true"
+        android:textColor="@color/design_default_color_secondary"
+        android:textSize="30dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

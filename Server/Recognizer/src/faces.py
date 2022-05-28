@@ -11,31 +11,9 @@ from io import BytesIO
 
 app = Flask(__name__)
 
-def post_frame():
-    img = Image.open("7.png ")
-
-    #Convert Pillow Image to bytes and then to base64
-    buffered = BytesIO()
-    img.save(buffered, format="png")
-    img_byte = buffered.getvalue() # bytes
-    img_base64 = base64.b64encode(img_byte) #Base64-encoded bytes * not str
-
-    #It's still bytes so json.Convert to str to dumps(Because the json element does not support bytes type)
-    img_str = img_base64.decode('utf-8') # str
-
-    files = {
-        "text":"geo",
-        "img":img_str
-        }
-
-    r = requests.post("http://127.0.0.1:5000", json=json.dumps(files)) #POST to server as json
-
-    print(r.json())
-
 face_cascade = cv2.CascadeClassifier('C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\cascades\\data\\haarcascade_frontalface_alt2.xml')
 eye_cascade = cv2.CascadeClassifier('C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\cascades\\data\\haarcascade_eye.xml')
 smile_cascade = cv2.CascadeClassifier('C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\cascades\\data\\haarcascade_smile.xml')
-
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read("C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\face-trainner.yml")
@@ -45,12 +23,8 @@ with open("C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\pickles\\fac
     og_labels = pickle.load(f)
     labels = {v:k for k,v in og_labels.items()}
 
-# cap = cv2.VideoCapture(0)
 check = 1
 i_s = 2000
-
-# ret, img = cap.read()
-
 
 def check_person(frame):
 
