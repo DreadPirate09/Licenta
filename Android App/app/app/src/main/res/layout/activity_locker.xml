@@ -4,33 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AC9C60"
+    android:background="@drawable/background"
     tools:context=".Locker">
 
     <Button
         android:id="@+id/cameraBtn"
-        android:layout_width="107dp"
-        android:layout_height="112dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:text="Take a selfie"
         app:icon="@android:drawable/ic_menu_camera"
-        app:iconSize="80dp"
+        app:iconSize="30dp"
         app:iconTint="?android:attr/colorMultiSelectHighlight"
+        app:layout_constraintBottom_toTopOf="@+id/send_Req_Btn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.675"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/chooseBtn"
-        android:layout_width="107dp"
-        android:layout_height="112dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="12dp"
+        android:text="Selfie from gallery"
         app:icon="@android:drawable/ic_menu_gallery"
-        app:iconSize="80dp"
+        app:iconSize="30dp"
         app:iconTint="#000000"
-        app:layout_constraintEnd_toStartOf="@+id/send_Req_Btn"
-        app:layout_constraintStart_toEndOf="@+id/cameraBtn"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/passwordBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -43,59 +46,22 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintVertical_bias="0.625"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/send_Req_Btn"
-        android:layout_width="107dp"
-        android:layout_height="112dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
+        android:text="check selfie to unlock"
         app:icon="?android:attr/fingerprintAuthDrawable"
-        app:iconSize="80dp"
+        app:iconSize="30dp"
         app:iconTint="@color/teal_200"
+        app:layout_constraintBottom_toTopOf="@+id/chooseBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:targetApi="m" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CAMERA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.118"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cameraBtn"
-        app:layout_constraintVertical_bias="0.051"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textViewGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GALLERY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseBtn"
-        app:layout_constraintVertical_bias="0.051"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textViewCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CHECK IDENTITY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_Req_Btn"
-        app:layout_constraintVertical_bias="0.051"
-        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textViewIdentity"
@@ -110,5 +76,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_image" />
+
+    <Button
+        android:id="@+id/home_btn"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:text="home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIdentity"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/passwordBtn"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="84dp"
+        android:iconTint="@drawable/passicon"
+        android:text="password mode"
+        app:icon="@drawable/passwordicon"
+        app:iconTint="@android:color/holo_orange_dark"
+        app:layout_constraintBottom_toTopOf="@+id/iv_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

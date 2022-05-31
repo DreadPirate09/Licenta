@@ -38,6 +38,43 @@ def index():
 
     return jsonify(response)
 
+@app.route("/unlock", methods=["GET", "POST"])
+def unlock():
+    json_data = request.get_json() #Get the POSTed json
+    print(type(json_data))
+    dict_data = json.loads(json.dumps(json_data)) #Convert json to dictionary
+
+    print(dict_data)
+
+    
+
+    response = {
+        "text":1,
+        "img_data":1,
+        "ret_val":1    
+        }
+
+    return jsonify(response)
+
+@app.route("/lock", methods=["GET", "POST"])
+def lock():
+    json_data = request.get_json() #Get the POSTed json
+    print(type(json_data))
+    dict_data = json.loads(json.dumps(json_data)) #Convert json to dictionary
+
+    print(dict_data)
+
+    
+
+    response = {
+        "text":1,
+        "img_data":1,
+        "ret_val":1    
+        }
+
+    return jsonify(response)
+
+
 @app.route("/android", methods=["GET", "POST"])
 def android():
     json_data = request.get_json() #Get the POSTed json

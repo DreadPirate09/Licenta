@@ -36,7 +36,7 @@ import okhttp3.Response;
 public class Locker extends AppCompatActivity {
     ImageView selectedImage;
     TextView txtIdentity;
-    Button cameraBtn, sendReqBtn ,chooseBtn;
+    Button cameraBtn, sendReqBtn ,chooseBtn, homeBtn, passwordBtn;
     Bitmap image;
     public static String identity;
     public static final int CMAERA_PERM_CODE = 101;
@@ -54,6 +54,8 @@ public class Locker extends AppCompatActivity {
         sendReqBtn = findViewById(R.id.send_Req_Btn);
         chooseBtn = findViewById(R.id.chooseBtn);
         txtIdentity = findViewById(R.id.textViewIdentity);
+        homeBtn = findViewById(R.id.home_btn);
+        passwordBtn = findViewById(R.id.passwordBtn);
 
         sendReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +76,20 @@ public class Locker extends AppCompatActivity {
                 } catch (InterruptedException | JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Locker.this, MainActivity.class));
+            }
+        });
+
+        passwordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Locker.this, PasswordActivity.class));
             }
         });
 
@@ -162,6 +178,8 @@ public class Locker extends AppCompatActivity {
             actualData.put("name","VJ");
             actualData.put("age",24);
             actualData.put("img",temp);
+
+            Log.d("OKHTTP3","add the data");
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("OKHTTP3","JSON excetion");
@@ -178,6 +196,7 @@ public class Locker extends AppCompatActivity {
             Log.d("OKHTTP3", "Request Done, got the response.");
             assert response.body() != null;
             return response.body().string();
+
         }catch (IOException e)
         {
             Log.d("OKHTTP3", "Exception while doing request.");
@@ -186,4 +205,5 @@ public class Locker extends AppCompatActivity {
         }
 
     }
+
 }

@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Licenta"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Locker"></activity>
+        <activity android:name=".PasswordActivity"></activity>
+        <activity android:name=".Locker" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
