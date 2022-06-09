@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Licenta"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Locker"></activity>
+        <activity android:name=".PasswordForAddPerson"></activity>
+        <activity android:name=".AddPerson" />
+        <activity android:name=".PasswordActivity" />
+        <activity android:name=".Locker" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
