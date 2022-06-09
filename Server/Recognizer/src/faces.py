@@ -47,6 +47,8 @@ def check_person(frame):
             color = (255, 255, 255)
             stroke = 2
             cv2.putText(frame, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
+        else:
+            print("Unknown person, confidence is :"+str(conf))
 
         color = (255, 0, 0) #BGR 0-255 
         stroke = 2

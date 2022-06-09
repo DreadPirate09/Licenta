@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".AddPerson">
+
+    <ImageView
+        android:id="@+id/IV2"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/right"
+        app:layout_constraintEnd_toStartOf="@+id/IV3"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toEndOf="@+id/IV1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/right" />
+
+    <ImageView
+        android:id="@+id/IV7"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/frontalfour"
+        app:layout_constraintEnd_toStartOf="@+id/IV6"
+        app:layout_constraintTop_toBottomOf="@+id/IV2"
+        tools:srcCompat="@drawable/frontalfour" />
+
+    <ImageView
+        android:id="@+id/IV1"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/topright"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/topright" />
+
+    <ImageView
+        android:id="@+id/IV9"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rightdown"
+        app:layout_constraintEnd_toStartOf="@+id/IV10"
+        app:layout_constraintHorizontal_bias="0.133"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IV7"
+        tools:srcCompat="@drawable/rightdown" />
+
+    <ImageView
+        android:id="@+id/IV6"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/frontalfour"
+        app:layout_constraintEnd_toStartOf="@+id/IV5"
+        app:layout_constraintTop_toBottomOf="@+id/IV3"
+        tools:srcCompat="@drawable/frontalfour" />
+
+    <ImageView
+        android:id="@+id/IV10"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="136dp"
+        android:background="@drawable/leftdown"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IV6"
+        app:layout_constraintVertical_bias="0.157"
+        tools:srcCompat="@drawable/leftdown" />
+
+    <ImageView
+        android:id="@+id/IV5"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/frontalfour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IV4"
+        tools:srcCompat="@drawable/frontalfour" />
+
+    <ImageView
+        android:id="@+id/IV8"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/frontalfour"
+        app:layout_constraintEnd_toStartOf="@+id/IV7"
+        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IV1"
+        tools:srcCompat="@drawable/frontalfour" />
+
+    <ImageView
+        android:id="@+id/IV4"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/topleft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/topleft" />
+
+    <ImageView
+        android:id="@+id/IV3"
+        android:layout_width="76dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/left"
+        app:layout_constraintEnd_toStartOf="@+id/IV4"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/left" />
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/nameOfThePerson"
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="56dp"
+        android:background="#AAE2EC"
+        android:hint="    NAME"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IV9" />
+
+    <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="208dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/btn_off"
+        android:text="UPLOAD IMAGES"
+        app:layout_constraintBottom_toTopOf="@+id/trainBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameOfThePerson"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/trainBtn"
+        android:layout_width="208dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="96dp"
+        android:background="@drawable/btn_off"
+        android:text="TRAIN IMAGES"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintVertical_bias="0.886" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

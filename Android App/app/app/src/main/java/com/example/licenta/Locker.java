@@ -36,7 +36,7 @@ import okhttp3.Response;
 public class Locker extends AppCompatActivity {
     ImageView selectedImage;
     TextView txtIdentity;
-    Button cameraBtn, sendReqBtn ,chooseBtn, homeBtn, passwordBtn;
+    Button cameraBtn, sendReqBtn ,chooseBtn, homeBtn, passwordBtn, addAPersonBtn;
     Bitmap image;
     public static String identity;
     public static final int CMAERA_PERM_CODE = 101;
@@ -56,6 +56,7 @@ public class Locker extends AppCompatActivity {
         txtIdentity = findViewById(R.id.textViewIdentity);
         homeBtn = findViewById(R.id.home_btn);
         passwordBtn = findViewById(R.id.passwordBtn);
+        addAPersonBtn = findViewById(R.id.addFaceBtn);
 
         sendReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +69,7 @@ public class Locker extends AppCompatActivity {
                     }
                 }).start();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(4000);
                     JSONObject obj = new JSONObject(identity);
                     String name =(String) obj.get("ret_val");
                     txtIdentity.setText(name);
@@ -83,6 +84,13 @@ public class Locker extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Locker.this, MainActivity.class));
+            }
+        });
+
+        addAPersonBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Locker.this, AddPerson.class));
             }
         });
 
@@ -156,7 +164,14 @@ public class Locker extends AppCompatActivity {
         }
 
         if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            image = (Bitmap) BitmapFactory.decodeFile(String.valueOf(data.getData()));
+            System.out.println("BEFORE BITMAP");
+            try {
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                System.out.println("Bitmap the image from the gallery");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("AFTER BITMAP");
             selectedImage.setImageURI(data.getData());
         }
     }
@@ -164,7 +179,7 @@ public class Locker extends AppCompatActivity {
     private String doPostRequest() {
 
         Log.d("OKHTTP3","Post function called");
-        String url = "https://370c-2a04-241b-8201-e180-690d-93b5-7283-8cac.ngrok.io";
+        String url = "https://e962-82-79-160-224.ngrok.io";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();

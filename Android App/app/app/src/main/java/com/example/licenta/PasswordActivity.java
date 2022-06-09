@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +26,7 @@ public class PasswordActivity extends AppCompatActivity {
 
     private Button homeBtn, lockBtn, unlockBtn;
     private TextInputLayout textInputLayout;
+    private static String response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,27 @@ public class PasswordActivity extends AppCompatActivity {
                 String hash = hashMaker.generateMd5Hash();
                 System.out.println(hash);
 
-                doPostPasswordLock(hash);
+                response =  doPostPasswordLock(hash);
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        response =  doPostPasswordUnlock(hash);
+//                    }
+//                }).start();
+                try {
+                    Thread.sleep(4000);
+                    JSONObject obj = new JSONObject(response);
+                    String textRecived =(String) obj.get("text");
+                    System.out.println("Response :"+textRecived);
+                    if(textRecived.equals("wrong password")){
+                        openDialog("Wrong Password");
+                    }else{
+                        openDialog("Correct Password, locking");
+                    }
+                } catch (InterruptedException | JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -76,26 +96,50 @@ public class PasswordActivity extends AppCompatActivity {
                 String hash = hashMaker.generateMd5Hash();
                 System.out.println(hash);
 
-                doPostPasswordUnlock(hash);
+                response =  doPostPasswordUnlock(hash);
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        response =  doPostPasswordUnlock(hash);
+//                    }
+//                }).start();
+                try {
+                    Thread.sleep(4000);
+                    JSONObject obj = new JSONObject(response);
+                    String textRecived =(String) obj.get("text");
+                    System.out.println("Response :"+textRecived);
+
+                    if(textRecived.equals("wrong password")){
+                        openDialog("Wrong Password");
+                    }else{
+                        openDialog("Correct Password, unlocking");
+                    }
+                } catch (JSONException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
     }
 
-    public void doPostPasswordUnlock(String md5){
+    public String doPostPasswordUnlock(String md5){
         Log.d("OKHTTP3","Post function for password unlock");
-        String url = "https://2b35-82-78-87-53.ngrok.io/unlock";
+        String url = "https://e962-82-79-160-224.ngrok.io/unlockPassword";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
 
+        System.out.println("Execute unlock");
 
         try {
             actualData.put("execute","unlock");
             actualData.put("md5",md5);
+            System.out.println("Load data unlock");
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("OKHTTP3","JSON excetion");
+            System.out.println("Exception data unlock");
         }
 
         RequestBody body = RequestBody.create(JSON,actualData.toString());
@@ -103,20 +147,23 @@ public class PasswordActivity extends AppCompatActivity {
                 .url(url)
                 .post(body)
                 .build();
-
+        System.out.println("Build request");
         try {
             Response response = client.newCall(newReq).execute();
             Log.d("OKHTTP3", "Request Done, got the response.");
+            assert response.body() != null;
+            return response.body().string();
         }catch (IOException e)
         {
             Log.d("OKHTTP3", "Exception while doing request.");
             e.printStackTrace();
+            return "Exception";
         }
     }
 
     public String doPostPasswordLock(String md5){
         Log.d("OKHTTP3","Post function for password lock");
-        String url = "https://2b35-82-78-87-53.ngrok.io/lock";
+        String url = "https://e962-82-79-160-224.ngrok.io/lockPassword";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
@@ -142,12 +189,18 @@ public class PasswordActivity extends AppCompatActivity {
         try {
             Response response = client.newCall(newReq).execute();
             Log.d("OKHTTP3", "Request Done, got the response.");
+            assert response.body() != null;
             return response.body().string();
         }catch (IOException e)
         {
             Log.d("OKHTTP3", "Exception while doing request.");
             e.printStackTrace();
-            return "ASD";
+            return "Exception";
         }
+    }
+
+    public void openDialog(String msg){
+        MessageDialog dialog = new MessageDialog(msg);
+        dialog.show(getSupportFragmentManager(), msg);
     }
 }

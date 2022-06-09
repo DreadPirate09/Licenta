@@ -13,7 +13,6 @@
         android:layout_width="241dp"
         android:layout_height="55dp"
         android:background="#CC0F0F"
-        android:drawableBottom="@drawable/ic_launcher_background"
         android:text="Locker"
         app:icon="@android:drawable/ic_lock_idle_lock"
         app:layout_constraintBottom_toBottomOf="parent"
