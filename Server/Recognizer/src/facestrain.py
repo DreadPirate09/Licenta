@@ -26,10 +26,10 @@ def execute():
 		for file in files:
 			if file.endswith("png") or file.endswith("jpg") or file.endswith("jpeg"):
 				path = os.path.join(root, file)
-				print(path)
+				#print(path)
 				label = os.path.basename(root).replace(" ", "-").lower()
-				print(label, path)
-				print("Loading ");
+				#print(label, path)
+				#print("Loading ");
 				if not label in label_ids:
 					label_ids[label] = current_id
 					current_id += 1
@@ -47,7 +47,7 @@ def execute():
 
 				for (x,y,w,h) in faces:
 					failure = failure - 1
-					print("For this one the face was detected")
+					#print("For this one the face was detected")
 					roi = image_array[y:y+h, x:x+w]
 					x_train.append(roi)
 					y_labels.append(id_)

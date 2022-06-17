@@ -75,6 +75,7 @@ public class Locker extends AppCompatActivity {
                     txtIdentity.setText(name);
                     System.out.println("NAME :"+name);
                 } catch (InterruptedException | JSONException e) {
+                    openDialog("Connection problems");
                     e.printStackTrace();
                 }
             }
@@ -90,7 +91,7 @@ public class Locker extends AppCompatActivity {
         addAPersonBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Locker.this, AddPerson.class));
+                startActivity(new Intent(Locker.this, PasswordForAddPerson.class));
             }
         });
 
@@ -177,35 +178,29 @@ public class Locker extends AppCompatActivity {
     }
 
     private String doPostRequest() {
-
         Log.d("OKHTTP3","Post function called");
-        String url = "https://e962-82-79-160-224.ngrok.io";
+        String url = Route.link;
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
-
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
 
         try {
-            actualData.put("name","VJ");
-            actualData.put("age",24);
             actualData.put("img",temp);
-
-            Log.d("OKHTTP3","add the data");
+            Log.d("OKHTTP3","add the image");
         } catch (JSONException e) {
+            openDialog("No image selected");
             e.printStackTrace();
             Log.d("OKHTTP3","JSON excetion");
         }
-
         RequestBody body = RequestBody.create(JSON,actualData.toString());
         Request newReq = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
-
         try {
             Response response = client.newCall(newReq).execute();
             Log.d("OKHTTP3", "Request Done, got the response.");
@@ -214,11 +209,15 @@ public class Locker extends AppCompatActivity {
 
         }catch (IOException e)
         {
+            openDialog("Connection problems");
             Log.d("OKHTTP3", "Exception while doing request.");
             e.printStackTrace();
             return "ASD";
         }
-
+    }
+    public void openDialog(String msg){
+        MessageDialog dialog = new MessageDialog(msg);
+        dialog.show(getSupportFragmentManager(), msg);
     }
 
 }

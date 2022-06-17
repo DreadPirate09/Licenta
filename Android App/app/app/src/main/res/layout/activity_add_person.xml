@@ -4,33 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background2"
     tools:context=".AddPerson">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/home_btn"
+        android:layout_width="85dp"
+        android:layout_height="45dp"
+        android:background="@drawable/custom_button"
+        android:text="home"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainBtn"
+        app:layout_constraintVertical_bias="0.927" />
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV2"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="56dp"
         android:background="@drawable/right"
         app:layout_constraintEnd_toStartOf="@+id/IV3"
         app:layout_constraintHorizontal_bias="0.382"
         app:layout_constraintStart_toEndOf="@+id/IV1"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/right" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV7"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/frontalfour"
         app:layout_constraintEnd_toStartOf="@+id/IV6"
         app:layout_constraintTop_toBottomOf="@+id/IV2"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/frontalfour" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV1"
         android:layout_width="78dp"
         android:layout_height="78dp"
@@ -39,88 +55,97 @@
         android:background="@drawable/topright"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/topright" />
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
+        tools:srcCompat="@drawable/topright"
+        tools:visibility="visible" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV9"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rightdown"
         app:layout_constraintEnd_toStartOf="@+id/IV10"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IV7"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/rightdown" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV6"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/frontalfour"
         app:layout_constraintEnd_toStartOf="@+id/IV5"
         app:layout_constraintTop_toBottomOf="@+id/IV3"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/frontalfour" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV10"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="136dp"
         android:background="@drawable/leftdown"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/nameOfThePerson"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IV6"
         app:layout_constraintVertical_bias="0.157"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/leftdown" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV5"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/frontalfour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IV4"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/frontalfour" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV8"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/frontalfour"
         app:layout_constraintEnd_toStartOf="@+id/IV7"
         app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IV1"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/frontalfour" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV4"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/topleft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/topleft" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/IV3"
-        android:layout_width="76dp"
-        android:layout_height="75dp"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/left"
         app:layout_constraintEnd_toStartOf="@+id/IV4"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
         tools:srcCompat="@drawable/left" />
 
 
@@ -129,20 +154,24 @@
         android:layout_width="296dp"
         android:layout_height="48dp"
         android:layout_marginTop="56dp"
-        android:background="#AAE2EC"
-        android:hint="    NAME"
+        android:paddingLeft="20dp"
+        android:background="@color/cardview_shadow_start_color"
+        android:hint="Name"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IV9" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/uploadBtn"
         android:layout_width="208dp"
         android:layout_height="51dp"
         android:layout_marginBottom="28dp"
-        android:background="@drawable/btn_off"
+        android:background="@drawable/custom_button"
+        android:textColor="#000000"
         android:text="UPLOAD IMAGES"
         app:layout_constraintBottom_toTopOf="@+id/trainBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,18 +180,19 @@
         app:layout_constraintTop_toBottomOf="@+id/nameOfThePerson"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/trainBtn"
         android:layout_width="208dp"
         android:layout_height="51dp"
         android:layout_marginBottom="96dp"
-        android:background="@drawable/btn_off"
+        android:background="@drawable/custom_button"
+        android:textColor="#000000"
         android:text="TRAIN IMAGES"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/nameOfThePerson"
         app:layout_constraintVertical_bias="0.886" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

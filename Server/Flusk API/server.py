@@ -17,6 +17,10 @@ ALLOW = 0
 PERSON = "unknown"
 count = 0
 newAddedImages = 0
+LOCKED_FLAG = 0
+IP_ADDRESS = "http://192.168.100.53:4040"
+
+person_allowed = ['Georgian','Ben_Afflek']
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -44,6 +48,44 @@ def index():
         "img_data":1,
         "ret_val":ret2    
         }
+
+    return jsonify(response)
+
+
+@app.route("/faceRecognition", methods=["GET", "POST"])
+def faceRecognition():
+    json_data = request.get_json()
+    print(type(json_data))
+    dict_data = json.loads(json.dumps(json_data)) 
+
+    print(dict_data)
+
+    img = dict_data["img"] 
+
+    img = base64.b64decode(img)
+    data_np = np.fromstring(img, dtype='uint8')
+    decimg = cv2.imdecode(data_np, 1)
+    name = faces.execute(img)
+
+    if name in person_allowed :
+        response = {
+            "success":1,
+            "person":name,
+            "lock":LOCKED_FLAG
+            }
+
+        if LOCKED_FLAG == 1:
+            r = requests.post(IP_ADDRESS+"/unlockPi", json=json.dumps(jsonVal))
+            LOCKED_FLAG = 0
+        else:
+            r = requests.post(IP_ADDRESS+"/lockPi", json=json.dumps(jsonVal))
+            LOCKED_FLAG = 1
+    else :
+        response = {
+            "success":0,
+            "person":"unknown",
+            "lock":LOCKED_FLAG 
+            }
 
     return jsonify(response)
 
@@ -79,7 +121,8 @@ def createFolderName():
 
     print(dict_data)
 
-    directory = dict_data["name"] 
+    directory = dict_data["name"]
+    person_allowed.append(directory)
     parent_dir = "C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\images"
     path = os.path.join(parent_dir, directory)
     os.mkdir(path)
@@ -114,12 +157,13 @@ def unlock():
     print(dict_data)
 
     jsonVal = {
-    "text":"okSir",
     "action":"unlock",
     "person":PERSON
     }
 
-    r = requests.post("http://192.168.0.107:4040/unlockPi", json=json.dumps(jsonVal))
+    LOCKED_FLAG = 0
+
+    r = requests.post(IP_ADDRESS+"/unlockPi", json=json.dumps(jsonVal))
 
     response = {
         "text":1,
@@ -138,12 +182,13 @@ def lock():
     print(dict_data)
 
     jsonVal = {
-    "text":"okSir",
     "action":"lock",
     "person":PERSON
     }
 
-    r = requests.post("http://192.168.0.107:4040/lockPi", json=json.dumps(jsonVal))
+    LOCKED_FLAG = 1
+
+    r = requests.post(IP_ADDRESS+"/lockPi", json=json.dumps(jsonVal))
 
     response = {
         "text":1,
@@ -163,23 +208,18 @@ def unlockPasssword():
 
     passHashRecived = dict_data['md5']
 
-    if passHashRecived == '81dc9bdb52d04dc20036dbd8313ed055' :
+    if passHashRecived == '81dc9bdb52d04dc20036dbd8313ed055' : #1234
         jsonVal = {
-        "text":"okSir",
-        "action":"unlock",
-        "person":PERSON
+        "action":"unlock"
         }
-        r = requests.post("http://192.168.0.107:4040/unlockPi", json=json.dumps(jsonVal))
+        r = requests.post(IP_ADDRESS+"/unlockPi", json=json.dumps(jsonVal))
         response = {
-        "text":"correct password",
-        "img_data":1,
-        "ret_val":1    
+        "text":"correct password"
         }
+        LOCKED_FLAG = 0
     else :
         response = {
-        "text":"wrong password",
-        "img_data":1,
-        "ret_val":1    
+        "text":"wrong password"
         }
 
 
@@ -195,13 +235,54 @@ def lockPasssword():
 
     passHashRecived = dict_data['md5']
 
-    if passHashRecived == '81dc9bdb52d04dc20036dbd8313ed055' :
+    if passHashRecived == '81dc9bdb52d04dc20036dbd8313ed055' : #1234
         jsonVal = {
-        "text":"okSir",
-        "action":"lock",
-        "person":PERSON
+        "action":"lock"
         }
-        r = requests.post("http://192.168.0.107:4040/lockPi", json=json.dumps(jsonVal))
+        r = requests.post(IP_ADDRESS+"/lockPi", json=json.dumps(jsonVal))
+        response = {
+        "text":"correct password"
+        }
+        LOCKED_FLAG = 1
+    else :
+        response = {
+        "text":"wrong password"
+        }
+
+    return jsonify(response)
+
+@app.route("/addPersonPassword", methods=["GET", "POST"])
+def addPersonPassword():
+    json_data = request.get_json() #Get the POSTed json
+    print(type(json_data))
+    dict_data = json.loads(json.dumps(json_data)) #Convert json to dictionary
+
+    print(dict_data)
+
+    passHashRecived = dict_data['md5']
+
+    if passHashRecived == '81dc9bdb52d04dc20036dbd8313ed055' : #1234
+        response = {
+        "text":"correct password"
+        }
+    else :
+        response = {
+        "text":"wrong password"
+        }
+
+    return jsonify(response)
+
+@app.route("/adminPassword", methods=["GET", "POST"])
+def adminPassword():
+    json_data = request.get_json() #Get the POSTed json
+    print(type(json_data))
+    dict_data = json.loads(json.dumps(json_data)) #Convert json to dictionary
+
+    print(dict_data)
+
+    passHashRecived = dict_data['md5']
+
+    if passHashRecived == '21232f297a57a5a743894a0e4a801fc3' : #admin
         response = {
         "text":"correct password",
         "img_data":1,

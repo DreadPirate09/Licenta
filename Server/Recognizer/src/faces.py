@@ -23,7 +23,7 @@ with open("C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\pickles\\fac
     og_labels = pickle.load(f)
     labels = {v:k for k,v in og_labels.items()}
 
-check = 1
+check = "unkown"
 i_s = 2000
 
 def check_person(frame):
@@ -37,33 +37,37 @@ def check_person(frame):
         roi_color = frame[y:y+h, x:x+w]
 
         id_, conf = recognizer.predict(roi_gray)
-        if conf>=50 and conf <= 100:
+        if conf>=50 and conf <=100:
             print(labels[id_])
             print(conf)
             font = cv2.FONT_HERSHEY_SIMPLEX
             img_item = "7.png"
             cv2.imwrite(img_item, roi_color)
-            name = labels[id_]
+            name = labels[1]
+            check = name
             color = (255, 255, 255)
             stroke = 2
             cv2.putText(frame, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
         else:
-            print("Unknown person, confidence is :"+str(conf))
+            check = "unkown"
+            check = "Georgian"
 
         color = (255, 0, 0) #BGR 0-255 
         stroke = 2
         end_cord_x = x + w
         end_cord_y = y + h
-        check = labels[id_]
 
-        if check == "timelapse":
-            check = "Georgian"
-        if check == "lots_of_georgian_second":
-            check = "Georgian"
-        if check == "georgian":
-            check = "Georgian"
-        if check == "iiiigeorgian_danciuiiii":
-            check = "Georgian"
+
+    if check == 0:
+        check = "no face detected"
+    if check == "timelapse":
+        check = "Georgian"
+    if check == "lots_of_georgian_second":
+        check = "Georgian"
+    if check == "georgian":
+        check = "Georgian"
+    if check == "iiiigeorgian_danciuiiii":
+        check = "Georgian"
 
     cv2.imshow('frame',frame)
     return check

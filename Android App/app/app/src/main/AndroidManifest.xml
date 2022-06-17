@@ -14,9 +14,11 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Licenta"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PasswordForAddPerson"></activity>
+        <activity android:name=".PasswordForAdmin"></activity>
+        <activity android:name=".Admin" />
+        <activity android:name=".PasswordForAddPerson" />
         <activity android:name=".AddPerson" />
         <activity android:name=".PasswordActivity" />
         <activity android:name=".Locker" />

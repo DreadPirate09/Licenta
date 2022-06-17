@@ -59,31 +59,35 @@ public class PasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // get the text , encrypt to md5 , send the request
                 String password = textInputLayout.getEditText().getText().toString();
-                EncryptToMD5 hashMaker = new EncryptToMD5(password);
-                String hash = hashMaker.generateMd5Hash();
-                System.out.println(hash);
+                if (password.length() == 0)
+                    openDialog("No password inserted");
+                else{
+                    EncryptToMD5 hashMaker = new EncryptToMD5(password);
+                    String hash = hashMaker.generateMd5Hash();
+                    System.out.println(hash);
 
-                response =  doPostPasswordLock(hash);
+                    response =  doPostPasswordLock(hash);
 //                new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        response =  doPostPasswordUnlock(hash);
 //                    }
 //                }).start();
-                try {
-                    Thread.sleep(4000);
-                    JSONObject obj = new JSONObject(response);
-                    String textRecived =(String) obj.get("text");
-                    System.out.println("Response :"+textRecived);
-                    if(textRecived.equals("wrong password")){
-                        openDialog("Wrong Password");
-                    }else{
-                        openDialog("Correct Password, locking");
+                    try {
+                        //Thread.sleep(4000);
+                        JSONObject obj = new JSONObject(response);
+                        String textRecived =(String) obj.get("text");
+                        System.out.println("Response :"+textRecived);
+                        if(textRecived.equals("wrong password")){
+                            openDialog("Wrong Password");
+                        }else{
+                            openDialog("Correct Password, locking");
+                        }
+                    } catch (JSONException e) {
+                        openDialog("Connection problems");
+                        e.printStackTrace();
                     }
-                } catch (InterruptedException | JSONException e) {
-                    e.printStackTrace();
                 }
-
             }
         });
 
@@ -92,32 +96,35 @@ public class PasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // get the text , encrypt to md5 , send the request
                 String password = textInputLayout.getEditText().getText().toString();
-                EncryptToMD5 hashMaker = new EncryptToMD5(password);
-                String hash = hashMaker.generateMd5Hash();
-                System.out.println(hash);
+                if (password.length() == 0){
+                    openDialog("No password inserted");
+                }else{
+                    EncryptToMD5 hashMaker = new EncryptToMD5(password);
+                    String hash = hashMaker.generateMd5Hash();
+                    System.out.println(hash);
 
-                response =  doPostPasswordUnlock(hash);
+                    response =  doPostPasswordUnlock(hash);
 //                new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        response =  doPostPasswordUnlock(hash);
 //                    }
 //                }).start();
-                try {
-                    Thread.sleep(4000);
-                    JSONObject obj = new JSONObject(response);
-                    String textRecived =(String) obj.get("text");
-                    System.out.println("Response :"+textRecived);
+                    try {
+                        //Thread.sleep(4000);
+                        JSONObject obj = new JSONObject(response);
+                        String textRecived =(String) obj.get("text");
+                        System.out.println("Response :"+textRecived);
 
-                    if(textRecived.equals("wrong password")){
-                        openDialog("Wrong Password");
-                    }else{
-                        openDialog("Correct Password, unlocking");
+                        if(textRecived.equals("wrong password")){
+                            openDialog("Wrong Password");
+                        }else{
+                            openDialog("Correct Password, unlocking");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException | InterruptedException e) {
-                    e.printStackTrace();
                 }
-
             }
         });
 
@@ -125,7 +132,7 @@ public class PasswordActivity extends AppCompatActivity {
 
     public String doPostPasswordUnlock(String md5){
         Log.d("OKHTTP3","Post function for password unlock");
-        String url = "https://e962-82-79-160-224.ngrok.io/unlockPassword";
+        String url = Route.link+"/unlockPassword";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
@@ -155,6 +162,7 @@ public class PasswordActivity extends AppCompatActivity {
             return response.body().string();
         }catch (IOException e)
         {
+            openDialog("Connection problems");
             Log.d("OKHTTP3", "Exception while doing request.");
             e.printStackTrace();
             return "Exception";
@@ -163,7 +171,7 @@ public class PasswordActivity extends AppCompatActivity {
 
     public String doPostPasswordLock(String md5){
         Log.d("OKHTTP3","Post function for password lock");
-        String url = "https://e962-82-79-160-224.ngrok.io/lockPassword";
+        String url = Route.link+"/lockPassword";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
@@ -193,6 +201,7 @@ public class PasswordActivity extends AppCompatActivity {
             return response.body().string();
         }catch (IOException e)
         {
+            openDialog("Connection problems");
             Log.d("OKHTTP3", "Exception while doing request.");
             e.printStackTrace();
             return "Exception";

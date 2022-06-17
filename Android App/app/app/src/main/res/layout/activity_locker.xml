@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".Locker">
+    android:background="@drawable/background2"
+    tools:context=".Locker"
+    tools:ignore="ExtraText">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addFaceBtn"
         android:layout_width="325dp"
         android:layout_height="45dp"
-        android:text="Add a face"
+        android:background="@drawable/custom_button"
+        android:textColor="#000000"
+        android:text="Add a person"
         app:icon="@drawable/ic_launcher_foreground"
         app:iconSize="60dp"
         app:iconTint="?android:attr/colorMultiSelectHighlight"
@@ -19,14 +22,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordBtn"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.257"
         tools:ignore="MissingConstraints" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cameraBtn"
         android:layout_width="325dp"
         android:layout_height="45dp"
+        android:background="@drawable/custom_button"
         android:text="Take a selfie"
+        android:textColor="#000000"
         app:icon="@android:drawable/ic_menu_camera"
         app:iconSize="30dp"
         app:iconTint="?android:attr/colorMultiSelectHighlight"
@@ -34,15 +39,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.852"
         tools:ignore="MissingConstraints" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/chooseBtn"
         android:layout_width="325dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/custom_button"
         android:text="Selfie from gallery"
+        android:textColor="#000000"
         app:icon="@android:drawable/ic_menu_gallery"
         app:iconSize="30dp"
         app:iconTint="#000000"
@@ -51,23 +58,28 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_image"
-        android:layout_width="149dp"
-        android:layout_height="132dp"
-        android:layout_marginTop="372dp"
+        android:layout_width="212dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="376dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circular"
+        app:strokeWidth="5dp"
         tools:ignore="MissingConstraints" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/send_Req_Btn"
         android:layout_width="325dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/custom_button"
         android:text="check selfie to unlock"
+        android:textColor="#000000"
         app:icon="?android:attr/fingerprintAuthDrawable"
         app:iconSize="30dp"
         app:iconTint="@color/teal_200"
@@ -78,25 +90,27 @@
 
     <TextView
         android:id="@+id/textViewIdentity"
-        android:layout_width="285dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text=""
         android:textAllCaps="true"
         android:textColor="@color/design_default_color_secondary"
         android:textSize="30dp"
         android:textStyle="bold|italic"
+        android:background="@drawable/border_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_image"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.213" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/home_btn"
         android:layout_width="85dp"
         android:layout_height="45dp"
+        android:background="@drawable/custom_button"
         android:text="home"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.018"
@@ -104,13 +118,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewIdentity"
         app:layout_constraintVertical_bias="0.8" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/passwordBtn"
         android:layout_width="325dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="88dp"
+        android:background="@drawable/custom_button"
         android:iconTint="@drawable/passicon"
         android:text="password mode"
+        android:textColor="#000000"
         app:icon="@drawable/passwordicon"
         app:iconTint="@android:color/holo_orange_dark"
         app:layout_constraintBottom_toTopOf="@+id/iv_image"

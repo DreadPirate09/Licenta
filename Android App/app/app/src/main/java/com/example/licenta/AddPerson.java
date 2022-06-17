@@ -44,13 +44,18 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
     public int imagesGetDone = 0;
     public Bitmap[] images = new Bitmap[10];
     private Boolean readyToTrain = false;
-    private Button uploadBtn, trainBtn;
+    private Button uploadBtn, trainBtn, homeBtn;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
+
+        openDialog("In this section you will need to touch all the face figures for taking a selfie" +
+                " for each of them and the name input will need to be filled .\n" +
+                "After that the UPLOAD & TRAIN button will need to be pressed " +
+                "for completing the addition of the new person");
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
@@ -74,6 +79,7 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
         IV10 = (ImageView) findViewById(R.id.IV10);
         uploadBtn = (Button) findViewById(R.id.uploadBtn);
         trainBtn = (Button) findViewById(R.id.trainBtn);
+        homeBtn = (Button) findViewById(R.id.home_btn);
         name = findViewById(R.id.nameOfThePerson);
 
         IV1.setOnClickListener((View.OnClickListener) this);
@@ -88,6 +94,13 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
         IV10.setOnClickListener((View.OnClickListener) this);
         uploadBtn.setOnClickListener((View.OnClickListener) this);
         trainBtn.setOnClickListener((View.OnClickListener) this);
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddPerson.this, MainActivity.class));
+            }
+        });
 
 
 
@@ -140,8 +153,10 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                 String nameToSend = name.getEditableText().toString();
                 if(imagesGetDone != 10){
                     System.out.println("Not ready " + nameToSend +" "+imagesGetDone);
+                    openDialog("Complete all the images");
                 }else if(nameToSend.length() < 4){
                     System.out.println("The name should be more than 4 characters");
+                    openDialog("The name should contain more than 4 characters");
                 }else {
                     System.out.println(" ready , send the photos with " + nameToSend);
                     uploadImages();
@@ -150,6 +165,7 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
             case R.id.trainBtn:
                 if(readyToTrain == false){
                     System.out.println("Not ready");
+                    openDialog("You need to upload the images first");
                 }else{
                     trainImages();
                     System.out.println("Ready for train");
@@ -219,8 +235,9 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
 
     public void uploadImages(){
 
+        int exeception = 0;
         Log.d("OKHTTP3","Post function for images called");
-        String url = "https://e962-82-79-160-224.ngrok.io/createFolderName";
+        String url = Route.link+"/createFolderName";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
@@ -230,6 +247,7 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("OKHTTP3","JSON excetion");
+            exeception = 1;
         }
 
         RequestBody body = RequestBody.create(JSON,actualData.toString());
@@ -248,12 +266,13 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
         {
             Log.d("OKHTTP3", "Exception while doing request.");
             e.printStackTrace();
+            exeception = 1;
         }
 
         for(int i=0;i<10;i++){
             {
                 Log.d("OKHTTP3","Post function called");
-                url = "https://e962-82-79-160-224.ngrok.io/addImages";
+                url = Route.link+"/addImages";
                 JSON = MediaType.parse("application/json;charset=utf-8");
                 JSONObject imageData = new JSONObject();
 
@@ -271,6 +290,7 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("OKHTTP3","JSON excetion");
+                    exeception = 1;
                 }
 
                 body = RequestBody.create(JSON,imageData.toString());
@@ -290,18 +310,23 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                 {
                     Log.d("OKHTTP3", "Exception while doing request.");
                     e.printStackTrace();
+                    exeception = 1;
                 }
 
             }
         }
+        if(exeception == 0)
+            openDialog("The images have been uploaded");
+        else
+            openDialog("Connection error");
 
     }
 
     public void trainImages(){
 
-
+            int exeception = 0;
             Log.d("OKHTTP3","Post function for train called");
-            String url = "https://e962-82-79-160-224.ngrok.io/trainModel";
+            String url = Route.link+"/trainModel";
             OkHttpClient client = new OkHttpClient();
             MediaType JSON = MediaType.parse("application/json;charset=utf-8");
             JSONObject actualData = new JSONObject();
@@ -309,6 +334,7 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                 actualData.put("name","train the model pls");
                 Log.d("OKHTTP3","add the name");
             } catch (JSONException e) {
+                exeception = 1;
                 e.printStackTrace();
                 Log.d("OKHTTP3","JSON excetion");
             }
@@ -327,8 +353,20 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
 
             }catch (IOException e)
             {
+                exeception = 1;
                 Log.d("OKHTTP3", "Exception while doing request.");
                 e.printStackTrace();
             }
+
+            if(exeception == 0)
+                openDialog("The person have been added");
+            else
+                openDialog("Connection error");
+
+    }
+
+    public void openDialog(String msg){
+        MessageDialog dialog = new MessageDialog(msg);
+        dialog.show(getSupportFragmentManager(), msg);
     }
 }
