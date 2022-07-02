@@ -4,13 +4,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -19,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,7 +36,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -45,6 +59,11 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
     public Bitmap[] images = new Bitmap[10];
     private Boolean readyToTrain = false;
     private Button uploadBtn, trainBtn, homeBtn;
+    private String currentPhotoPath;
+    private ProgressBar progressBar;
+    public int prgs = 0;
+    int count = 0;
+    Timer timer;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -56,6 +75,8 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                 " for each of them and the name input will need to be filled .\n" +
                 "After that the UPLOAD & TRAIN button will need to be pressed " +
                 "for completing the addition of the new person");
+
+        progressBar = findViewById(R.id.progressBar);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
@@ -159,7 +180,20 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
                     openDialog("The name should contain more than 4 characters");
                 }else {
                     System.out.println(" ready , send the photos with " + nameToSend);
+                    Handler han = new Handler();
+                    han.postAtTime(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+                    }, 1000);
                     uploadImages();
+                    han.postAtTime(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    }, 1000);
                 }
                 break;
             case R.id.trainBtn:
@@ -185,8 +219,21 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
     }
 
     private void openCamera(){
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera, CAMERA_REQUEST_CODE);
+        String fileName = "photo";
+        File storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        try{
+            File imageFile = File.createTempFile(fileName, ".jpg", storageDirectory);
+            currentPhotoPath = imageFile.getAbsolutePath();
+            Uri imageUri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+                    BuildConfig.APPLICATION_ID + ".provider", imageFile);
+            Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(camera, CAMERA_REQUEST_CODE);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -194,36 +241,49 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAMERA_REQUEST_CODE && imagesGetDone < 10){
-            images[imagesGetDone] = (Bitmap) data.getExtras().get("data");
+            images[imagesGetDone] = BitmapFactory.decodeFile(currentPhotoPath);
+            images[imagesGetDone] = rotateImage(images[imagesGetDone], 270);
+            images[imagesGetDone] = Bitmap.createScaledBitmap(images[imagesGetDone], 550, 550, true);
+
             switch (imagesGetDone){
                 case 0:
+                    IV1.setImageBitmap(null);
                     IV1.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 1:
+                    IV2.setImageBitmap(null);
                     IV2.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 2:
+                    IV3.setImageBitmap(null);
                     IV3.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 3:
+                    IV4.setImageBitmap(null);
                     IV4.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 4:
+                    IV5.setImageBitmap(null);
                     IV5.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 5:
+                    IV6.setImageBitmap(null);
                     IV6.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 6:
+                    IV7.setImageBitmap(null);
                     IV7.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 7:
+                    IV8.setImageBitmap(null);
                     IV8.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 8:
+                    IV9.setImageBitmap(null);
                     IV9.setImageBitmap(images[imagesGetDone]);
                     break;
                 case 9:
+                    IV10.setImageBitmap(null);
                     IV10.setImageBitmap(images[imagesGetDone]);
                     break;
                 default:
@@ -234,7 +294,6 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
     }
 
     public void uploadImages(){
-
         int exeception = 0;
         Log.d("OKHTTP3","Post function for images called");
         String url = Route.link+"/createFolderName";
@@ -323,7 +382,6 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
     }
 
     public void trainImages(){
-
             int exeception = 0;
             Log.d("OKHTTP3","Post function for train called");
             String url = Route.link+"/trainModel";
@@ -368,5 +426,13 @@ public class AddPerson extends AppCompatActivity implements View.OnClickListener
     public void openDialog(String msg){
         MessageDialog dialog = new MessageDialog(msg);
         dialog.show(getSupportFragmentManager(), msg);
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
     }
 }

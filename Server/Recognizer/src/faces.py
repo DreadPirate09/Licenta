@@ -24,7 +24,6 @@ with open("C:\\GitRepo1\\Licenta\\Licenta\\Server\\Recognizer\\src\\pickles\\fac
     labels = {v:k for k,v in og_labels.items()}
 
 check = "unkown"
-i_s = 2000
 
 def check_person(frame):
 
@@ -39,18 +38,13 @@ def check_person(frame):
         id_, conf = recognizer.predict(roi_gray)
         if conf>=50 and conf <=100:
             print(labels[id_])
-            print(conf)
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            img_item = "7.png"
+            img_item = "faceCrop.png"
             cv2.imwrite(img_item, roi_color)
-            name = labels[1]
-            check = name
+            return labels[id_]
             color = (255, 255, 255)
             stroke = 2
-            cv2.putText(frame, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
         else:
-            check = "unkown"
-            check = "Georgian"
+            return "unkown"
 
         color = (255, 0, 0) #BGR 0-255 
         stroke = 2
@@ -58,32 +52,11 @@ def check_person(frame):
         end_cord_y = y + h
 
 
-    if check == 0:
-        check = "no face detected"
-    if check == "timelapse":
-        check = "Georgian"
-    if check == "lots_of_georgian_second":
-        check = "Georgian"
-    if check == "georgian":
-        check = "Georgian"
-    if check == "iiiigeorgian_danciuiiii":
-        check = "Georgian"
-
-    cv2.imshow('frame',frame)
-    return check
-
+    return "no face detected"
 
 def execute(img):
     while(True):
         ret = check_person(img)
         return ret
-        # check = 0
-        # if ret == False :
-        #     print('no face detected')
-        #     return False
-        # else:
-        #     return True
-        if cv2.waitKey(20) & 0xFF == ord('q'):
-            break
 
 

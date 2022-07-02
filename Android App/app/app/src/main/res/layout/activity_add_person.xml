@@ -7,6 +7,22 @@
     android:background="@drawable/background2"
     tools:context=".AddPerson">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminateOnly="true"
+        android:progressDrawable="@drawable/custom_progress_bg"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainBtn"
+        app:layout_constraintVertical_bias="0.27"
+        tools:ignore="MissingConstraints"></ProgressBar>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/home_btn"
         android:layout_width="85dp"

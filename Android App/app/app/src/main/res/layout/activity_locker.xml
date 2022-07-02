@@ -8,13 +8,14 @@
     tools:context=".Locker"
     tools:ignore="ExtraText">
 
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addFaceBtn"
         android:layout_width="325dp"
         android:layout_height="45dp"
         android:background="@drawable/custom_button"
-        android:textColor="#000000"
         android:text="Add a person"
+        android:textColor="#000000"
         app:icon="@drawable/ic_launcher_foreground"
         app:iconSize="60dp"
         app:iconTint="?android:attr/colorMultiSelectHighlight"
@@ -95,14 +96,30 @@
         android:text=""
         android:textAllCaps="true"
         android:textColor="@color/design_default_color_secondary"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:textStyle="bold|italic"
-        android:background="@drawable/border_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/home_btn"
         app:layout_constraintTop_toBottomOf="@+id/iv_image"
-        app:layout_constraintVertical_bias="0.213" />
+        app:layout_constraintVertical_bias="0.203" />
+
+    <TextView
+        android:id="@+id/resultTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAllCaps="true"
+        android:textColor="@color/design_default_color_secondary"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/home_btn"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIdentity"
+        app:layout_constraintVertical_bias="0.166" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/home_btn"
@@ -132,5 +149,6 @@
         app:layout_constraintBottom_toTopOf="@+id/iv_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button locker,admin;
+    Button locker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         locker = findViewById(R.id.Locker);
-        //admin = findViewById(R.id.Admin);
 
         locker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,13 +23,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Locker.class));
             }
         });
-
-//        admin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, PasswordForAdmin.class));
-//            }
-//        });
 
     }
 

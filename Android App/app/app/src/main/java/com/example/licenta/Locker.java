@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -20,12 +23,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -36,6 +44,7 @@ import okhttp3.Response;
 public class Locker extends AppCompatActivity {
     ImageView selectedImage;
     TextView txtIdentity;
+    TextView resultTxt;
     Button cameraBtn, sendReqBtn ,chooseBtn, homeBtn, passwordBtn, addAPersonBtn;
     Bitmap image;
     public static String identity;
@@ -43,6 +52,8 @@ public class Locker extends AppCompatActivity {
     public static final int CAMERA_REQUEST_CODE = 102;
     public static final int IMAGE_PICK_CODE = 1000;
     public static final int PERMISSION_CODE = 1001;
+    private int canDoRequest = 0;
+    private String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,29 +65,37 @@ public class Locker extends AppCompatActivity {
         sendReqBtn = findViewById(R.id.send_Req_Btn);
         chooseBtn = findViewById(R.id.chooseBtn);
         txtIdentity = findViewById(R.id.textViewIdentity);
+        resultTxt = findViewById(R.id.resultTxt);
         homeBtn = findViewById(R.id.home_btn);
         passwordBtn = findViewById(R.id.passwordBtn);
         addAPersonBtn = findViewById(R.id.addFaceBtn);
+
 
         sendReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String[] ide = new String[1];
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        identity = doPostRequest();
+                if(canDoRequest == 1){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            identity = doPostRequest();
+                        }
+                    }).start();
+                    try {
+                        Thread.sleep(4000);
+                        JSONObject obj = new JSONObject(identity);
+                        String name =(String) obj.get("name");
+                        String result = (String) obj.get("result");
+                        txtIdentity.setText(name);
+                        resultTxt.setText(result);
+                        System.out.println("NAME :"+name);
+                    } catch (InterruptedException | JSONException e) {
+                        openDialog("Connection problems");
+                        e.printStackTrace();
                     }
-                }).start();
-                try {
-                    Thread.sleep(4000);
-                    JSONObject obj = new JSONObject(identity);
-                    String name =(String) obj.get("ret_val");
-                    txtIdentity.setText(name);
-                    System.out.println("NAME :"+name);
-                } catch (InterruptedException | JSONException e) {
-                    openDialog("Connection problems");
-                    e.printStackTrace();
+                }else{
+                    openDialog("You need to take a selfie first");
                 }
             }
         });
@@ -145,8 +164,22 @@ public class Locker extends AppCompatActivity {
     }
 
     private void openCamera(){
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera, CAMERA_REQUEST_CODE);
+        String fileName = "photo";
+        File storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        try{
+            File imageFile = File.createTempFile(fileName, ".jpg", storageDirectory);
+            currentPhotoPath = imageFile.getAbsolutePath();
+            Uri imageUri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+                    BuildConfig.APPLICATION_ID + ".provider", imageFile);
+            Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(camera, CAMERA_REQUEST_CODE);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 
     private void pickImageFromGallery() {
@@ -160,7 +193,10 @@ public class Locker extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAMERA_REQUEST_CODE ){
-            image = (Bitmap) data.getExtras().get("data");
+            image = BitmapFactory.decodeFile(currentPhotoPath);
+            image = rotateImage(image, 270);
+            image = Bitmap.createScaledBitmap(image, 550, 550, true);
+            canDoRequest = 1;
             selectedImage.setImageBitmap(image);
         }
 
@@ -168,6 +204,8 @@ public class Locker extends AppCompatActivity {
             System.out.println("BEFORE BITMAP");
             try {
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                image = rotateImage(image, 270);
+                image = Bitmap.createScaledBitmap(image, 550, 550, true);
                 System.out.println("Bitmap the image from the gallery");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -179,7 +217,7 @@ public class Locker extends AppCompatActivity {
 
     private String doPostRequest() {
         Log.d("OKHTTP3","Post function called");
-        String url = Route.link;
+        String url = Route.link+"/faceRecognition";
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         JSONObject actualData = new JSONObject();
@@ -218,6 +256,14 @@ public class Locker extends AppCompatActivity {
     public void openDialog(String msg){
         MessageDialog dialog = new MessageDialog(msg);
         dialog.show(getSupportFragmentManager(), msg);
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
     }
 
 }
